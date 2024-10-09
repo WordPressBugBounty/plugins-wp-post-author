@@ -3,7 +3,7 @@ Contributors: afthemes
 Tags: author, author bio, author box, multiple authors, users
 Requires at least: 3.0.1
 Tested up to: 6.6
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 Short Description: Enhance Your Posts with Author Box, Social Links, Co-Authors, Guest Authors, and Post Rating System, including User Registration Form Builder
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -279,6 +279,10 @@ If you’ve just installed WP Post Author, it will add a post author box with mu
 11. WP Post Author Setting Panel
 
 == Changelog ==
+= 3.8.2 =
+* Update: Security Improvement
+* Update: General Improvement
+
 = 3.8.1 =
 * Update: Security Improvement
 * Update: General Improvement
