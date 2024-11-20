@@ -399,42 +399,38 @@ if (!function_exists('awpa_add_author')) {
 }
 
 
-
 if (!function_exists('awpa_post_author_add_custom_style')) {
-    function awpa_post_author_add_custom_style()
-    {
-
+    function awpa_post_author_add_custom_style() {
+        // Get options from settings
         $options = get_option('awpa_setting_options');
-        $primary_color = isset($options['awpa_highlight_color']) ? ($options['awpa_highlight_color']) : '#af0000';
-        $custom_css = isset($options['awpa_custom_css']) ? ($options['awpa_custom_css']) : '';
+        $primary_color = isset($options['awpa_highlight_color']) ? $options['awpa_highlight_color'] : '#af0000';
+        $custom_css = isset($options['awpa_custom_css']) ? $options['awpa_custom_css'] : '';
 
-    ?>
+        // Generate CSS string
+        $inline_css = '';
 
-        <style type="text/css">
-            <?php if (!empty($primary_color)) : ?>
-
+        if (!empty($primary_color)) {
+            $inline_css .= "
                 .wp_post_author_widget .wp-post-author-meta .awpa-display-name > a:hover,
                 body .wp-post-author-wrap .awpa-display-name > a:hover {
-                    color: <?php echo wp_kses_post($primary_color); ?>
+                    color: $primary_color;
                 }
-                
                 .wp-post-author-meta .wp-post-author-meta-more-posts a.awpa-more-posts:hover, 
                 .awpa-review-field .right-star .awpa-rating-button:not(:disabled):hover {
-                    color: <?php echo wp_kses_post($primary_color); ?>;
-                    border-color: <?php echo wp_kses_post($primary_color); ?>
+                    color: $primary_color;
+                    border-color: $primary_color;
                 }
-            <?php endif; ?>
-        
-            <?php
-                if (!empty($custom_css)) {
-                    echo wp_strip_all_tags($custom_css);
-                }
-            ?>
-        </style>
+            ";
+        }
 
-<?php
+        if (!empty($custom_css)) {
+            $inline_css .= wp_strip_all_tags($custom_css);
+        }
+
+        return $inline_css;
     }
 }
+
 
 if (!function_exists('awpa_admin_body_class')) {
 
