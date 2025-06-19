@@ -3,7 +3,7 @@
  * Plugin Name:       WP Post Author
  * Plugin URI:        https://afthemes.com/plugins/wp-post-author/
  * Description:       Boost Your Blog’s Engagement with WP Post Author: Add an Author Box, Social Links, Co-Authors, Guest Authors, Post Rating System, and Custom User Registration Form Builder.
- * Version:           3.8.3
+ * Version:           3.8.4
  * Author:            AF themes
  * Author URI:        https://afthemes.com
  * Text Domain:       wp-post-author
@@ -23,7 +23,7 @@ if (!class_exists('WP_Post_Author')):
          *
          * @var string
          */
-        const VERSION = '3.8.3';
+        const VERSION = '3.8.4';
 
         /**
          * Instance of this class.
@@ -55,7 +55,7 @@ if (!class_exists('WP_Post_Author')):
             /**
              * Define global constants
              **/
-            define('AWPA_VERSION', '3.6.2');
+            define('AWPA_VERSION', '3.6.4');
             defined('AWPA_BASE_FILE') or define('AWPA_BASE_FILE', __FILE__);
             defined('AWPA_BASE_DIR') or define('AWPA_BASE_DIR', dirname(AWPA_BASE_FILE));
             defined('AWPA_PLUGIN_BASE') or define('AWPA_PLUGIN_BASE', plugin_basename(AWPA_BASE_FILE));
@@ -75,12 +75,13 @@ if (!class_exists('WP_Post_Author')):
             add_action('init', [$this, 'awpa_load_core_files']);
             add_action('awpa_call_seeder_function', array($this, 'awpa_hook_call_seeder_function'), 10);
 
-            include_once 'includes/core.php';
+            
         } // end of contructor
 
         public function awpa_load_core_files()
     {
 
+            include_once 'includes/core.php';
             include_once 'includes/fonts.php';
             include_once 'includes/themes/multi-authors-list.php';
             include_once 'includes/api-request/free/request-add.php';

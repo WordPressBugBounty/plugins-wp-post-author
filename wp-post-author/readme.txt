@@ -2,7 +2,7 @@
 Contributors: afthemes
 Tags: author, author bio, author box, multiple authors, users
 Requires at least: 3.0.1
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 3.8.3
 Short Description: Enhance Your Posts with Author Box, Social Links, Co-Authors, Guest Authors, and Post Rating System, including User Registration Form Builder
 License: GPLv2 or later
