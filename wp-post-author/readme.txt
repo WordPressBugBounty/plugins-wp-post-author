@@ -1,260 +1,99 @@
-﻿=== WP Post Author - Boost Your Blog's Engagement with Author Box, Social Links, Co-Authors, Guest Authors, Post Rating System, and Custom User Registration Form Builder ===
+﻿=== WP Post Author ===
 Contributors: afthemes
 Tags: author, author bio, author box, multiple authors, users
-Requires at least: 3.0.1
+Donate link: https://afthemes.com/plugins/wp-post-author
+Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 3.8.3
-Short Description: Enhance Your Posts with Author Box, Social Links, Co-Authors, Guest Authors, and Post Rating System, including User Registration Form Builder
+Stable tag: 3.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Add an Author Box, Social Links, Co-Authors, Guest Authors, Post Rating System, and Custom User Registration Form Builder
+
+Display author boxes, social links, co-authors, guest authors, post rating system, and user registration forms.
 
 == Description ==
- Elevate the quality and engagement of your posts with our comprehensive solution! The **WP Post Author** Box ensures an appealing author display, while the Co-Authors and Guest Authors feature facilitates seamless collaboration. Additionally, our Post Rating System empowers readers to provide valuable feedback. Furthermore, the Drag & Drop Registration Form Builder allows you to generate leads for your business.
-[Try It Now](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author) | [Explore More](https://afthemes.com/plugins/wp-post-author/) | | [Starter Sites](https://afthemes.com/) | [Docs](https://afthemes.com/plugins/wp-post-author/docs/) | [Videos](https://www.youtube.com/watch?v=J5VIXAljuBg&list=PL8nUD79gscmjMx2DC7dVCkVYhoGruezzp&ab_channel=AFthemes) | [Blog](https://afthemes.com/blog/) | [Support](https://afthemes.com/supports/) 
+WP Post Author provides a complete solution for displaying author information, managing multiple authors, collecting post ratings, and creating user registration forms.
 
-## Plugin Features:
-**WP Post Author** is the *Best Author Box* plugin with social icons and Post Rating System for WordPress.
-
-**💁 Post Author Box**
->WP Post Author box for single post or/and single author page
-[youtube https://www.youtube.com/watch?v=J5VIXAljuBg]
-
-The main module of the author box has Section Title option, it's content alignment, i.e left/right/center and your profile image shapes. The plugin also adds number of social contacts custom fields. It fetches the data from default WordPress's user profile dashboard.
-
-* Auto Append to the Content
-* Co-Authors and Guest Authors Support
+Features include:
 * Customizable Author Box
-* Translatable and Customizable String
-* Block with customizable option
-* Widgets with customizable option
-* Shortcode with customizable option
-* Profile Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Author's Latest Posts Tab [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Author's Top Rated Posts Tab [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Author Rating based on Top Rated Posts [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Advance Color Options [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-**👥 Co-Authors** 
->The WordPress post meta box to assign post to Co-Authors
-[youtube https://www.youtube.com/watch?v=J5VIXAljuBg]
-
-The module of the plugin has feature to  create and add multiple authors and guest authors for a single post. You can add/update and delete registered users from the post metabox named, Authors.
-
-* Multi-Author option
-* New Author Creation Form
-* Supports Co-Authors
-* Co-Author Rating based on Top Rated Post [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Co-Author Profile Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Co-Author Latest Posts Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Co-Author Top Rated Posts Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Single Author Profile Block [PRO](https://afthemes.com/plugins/wp-post-author/)
-* All Authors Profile List Block [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-
-**🎩 Guest Authors** 
->The WordPress panel to create and assign post to guest authors
-[youtube https://www.youtube.com/watch?v=8qHrfDw0zCE]
-
-The module of the plugin has feature to add create and add multiple guest authors for a single post. You can add/update and delete registered authors from the admin menu named, Guest Authors.
-
-* Dashboard to create Guest Author with details
-* Dashboard to lists all Guest Authors
-* Editable the existing Guest Author
-* Guest Author's Rating based on Top Rated Post [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Guest Author's Profile Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Guest Author's Latest Posts Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Guest Author's Top Rated Posts Tab option on Author Box [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Single Guest Author Profile Block [PRO](https://afthemes.com/plugins/wp-post-author/)
-* All Guest Authors Profile Block [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-
-**⭐ Post Rating System** 
->Enable readers to give star ratings to posts
-[youtube https://www.youtube.com/watch?v=65OpbXOY8XU]
-
-Introducing the Post Rating system, a valuable feature that enhances user engagement on your website. With this functionality, logged-in readers have the ability to give star ratings to individual posts. This system allows readers to easily provide ratings, helping to highlight the popularity or quality of the posts.
-
-* Global Enable/Disable Post Rating Option
-* Single Post Enable/Disable Post Rating Option
-* Site-wide Top Rated Posts [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Advance Settings [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Top Rated Posts Block [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Ratings visible on Post List Admin Dashboard [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Top Rated Post on General Admin Dashboard [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Login page link option for Post Rating [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Registration page link option for Post Rating [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-**🔥 Recommended Post** 
->Enable readers to give star ratings to posts
-
-Introducing the Recommended Posts algorithm, a valuable feature that enhances user engagement on your website. With this functionality, users have the ability to get posts list with their preference.
-
-* Auto Appended Recommended Post to the content​ [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Recommended Post based on user preference​ [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Advanced Settings for Recommended Post ​​ [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Recommended Post Block​ [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-
-
-**📋 Registration Form Builder**
->The WordPress form builder panel to create variety of author registrations forms
-[youtube https://www.youtube.com/watch?v=c62vIfQiu-c]
-
-The module of the plugin has feature to create and add multiple registrations forms for your website. You can add/update and delete registrations from the builder admin menu, Resgistration Forms.
-
-* Customizable Login Form Block
+* Co-Authors and Guest Authors support
+* Post Rating System
+* Recommended Posts
 * User Registration Form Builder
-* Fully Customizable Registration Form Block
-* ReCaptcha Itegration
-* Social Fields [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Login Page Selection Option [PRO](https://afthemes.com/plugins/wp-post-author/)
-* Register Page Selection Option [PRO](https://afthemes.com/plugins/wp-post-author/)
+* Gutenberg Blocks, Widgets, and Shortcodes
 
-**🔒 reCaptcha V2 or V3**
->You can add reCaptcha (V2 or V3) for your form registration and login
+Live demo: [Try It Now](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author)  
+Documentation: [Docs](https://afthemes.com/plugins/wp-post-author/docs/)  
+Video Tutorials: [YouTube Playlist](https://www.youtube.com/watch?v=J5VIXAljuBg&list=PL8nUD79gscmjMx2DC7dVCkVYhoGruezzp)  
+Support: [AFThemes Support](https://afthemes.com/supports/)
 
-The setting of the plugin has feature to add reCaptcha for registrations/login forms for your website. 
+== Features ==
 
+**Author Box**
+* Display author information on single posts or author pages
+* Section title, alignment, profile image shapes
+* Auto-append to content
+* Customizable settings, translatable strings
+* Gutenberg block, widgets, and shortcode support
+* PRO: Profile tab, latest posts, top rated posts, author rating, advanced color options
+* [YouTube Tutorial](https://www.youtube.com/watch?v=J5VIXAljuBg)
 
-**📥 Custom Mail SMTP configuration**
->You can set either default WordPress mail setting or Custom SMTP configuration
+**Co-Authors**
+* Assign multiple authors to a post
+* Create, update, delete registered users in the post meta box
+* PRO: Author rating, profile tab, latest posts, top-rated posts, single/all author profile blocks
+* [YouTube Tutorial](https://www.youtube.com/watch?v=J5VIXAljuBg)
 
-The setting of the plugin has feature to select between default WordPress email or custom SMTP configuration for registrations/login emails for your website.
+**Guest Authors**
+* Manage guest authors from the dashboard
+* Add, edit, or delete guest authors
+* PRO: Guest author rating, profile tab, latest posts, top-rated posts, single/all guest author profile blocks
+* [YouTube Tutorial](https://www.youtube.com/watch?v=8qHrfDw0zCE)
 
+**Post Rating System**
+* Enable logged-in readers to rate posts
+* Option to enable/disable globally or per post
+* PRO: Top rated posts block, ratings in dashboard, login/register page links
+* [YouTube Tutorial](https://www.youtube.com/watch?v=65OpbXOY8XU)
 
-## WordPress (Gutenberg) Blocks
-WP Post Author plugin contains 3 Gutenberg blocks. Author Box Block for the post author informations, Author Registration Block for new post author signups and Author Login Block for user sign-in.
-[youtube https://www.youtube.com/watch?v=S4jnoE-cFNA]
+**Recommended Posts**
+* PRO: Auto append recommended posts to content, user-preference-based posts, advanced settings, Gutenberg block
 
-**💁 Author Box Block**
-It has number of input fields to add author informations. The block module of the author box has Section Title option, it's content alignment, i.e left/right/center and your profile image shapes. The plugin also adds number of social contacts custom fields.
+**Registration Form Builder**
+* Drag & drop registration form builder
+* Customizable login and registration forms
+* ReCaptcha V2/V3 support
+* PRO: Social fields, custom login/register page selection
+* [YouTube Tutorial](https://www.youtube.com/watch?v=c62vIfQiu-c)
 
-**💁 User Registration Form Block**
-You can select and add the specific block from the form builder to page/post in order to allow author registration.
+**Gutenberg Blocks**
+* Author Box, Author Registration, Author Login
+* PRO: Single/All Author & Guest Author Bio, Top Rated Posts, Recommended Posts
+* [YouTube Tutorial](https://www.youtube.com/watch?v=S4jnoE-cFNA)
 
-**💁 User Login Form Block**
-You can add the user login block to page/post.
+**Widgets**
+* Single post and author page author box
+* Specific and custom author widgets with social links and profile options
 
-**💁 Single Author Bio Block**
-You can display any selected user's profile at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
+**Shortcodes**
+* `[wp-post-author]` – Display author box
+* `[awpa-registration-form]` – Display registration form
+* `[awpa-user-login]` – Display login form
 
-**💁 All Authors Bio Block**
-You can display all user's profiles at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
+**Social Links**
+* Facebook, Instagram, YouTube, Twitter, LinkedIn, Email, Website (display if available)
 
-**💁 Single Guest Author Bio Block**
-You can display any selected guest user's profiles at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-**💁 All Guest Authors Bio Block**
-You can display all guest user's profiles at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-**💁 Top Rated Posts Block**
-You can show site-wide top rated posts at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-**💁 Recommended Posts Block**
-You can show recommended posts based on user's preferences at anywhere with the block editor. [PRO](https://afthemes.com/plugins/wp-post-author/)
-
-
-## Legacy Widgets
-**WP Post Author for single post and single author page**
-[youtube https://www.youtube.com/watch?v=nqp8u9qBYYU]
-
->The widget module of the author box has Section Title option, it's content alignment, i.e left/right/center and your profile image shapes. The plugin also adds number of social contacts custom fields. It fetches the data from default WordPress's user profile dashboard.
-
-**WP Posts Author Widget**
-It reads the post's author data from their WordPress profile dashboard.
-
-**WP Posts Author (Specific) Widget**
-You can enter the specific user id to read the selected author data from their WordPress profile dashboard.
-
-**WP Posts Author (Custom) Widget**
-The widgets have number of custom fields like Section Title, Name, Image Upload, Biography along with social links inputs to make custom author box.
-
-## Shortcodes
-
->The plugin also powers shortcode option for your posts/pages builder and third party widgets with having number of attributes to make the author box approriate.
-
-**💁 Author Box `[wp-post-author]`**
-
-* title - Any text string.
-* align - left, right or center.
-* image-layout - square or round.
-* show-role - true or false.
-* show-email - true or false.
-
-**💁 User Registration Form `[awpa-registration-form]`**
-
-* title - Any text string.
-* form_id - Registration Form ID, i.e any whole number.
-
-**💁 Author Login Form `[awpa-user-login]`**
-
-* title - Any text string.
-* button_text - Any text string.
-
-## Social and links options 
-* **Facebook** - Display if available (Custom User Field).
-* **Instagram** - Display if available (Custom User Field).
-* **YouTube** - Display if available (Custom User Field).
-* **Twitter** - Display if available (Custom User Field).
-* **LinkedIn** - Display if available (Custom User Field).
-* **Email** - Display if available.
-* **Website** - Display if available.
-
-## Multiple authors byline support to the theme
-If you’ve just installed WP Post Author, it will add a post author box with multiple authors under the content. You might notice that the bylines are being added in the backend but aren’t appearing on the frontend. You’ll need to add the function to your theme before the bylines will appear.
-
-`if(class_exists('WP_Post_Author')){ awpa_ma_multi_authors_list_post(); } else{ theme original code or function}`
+**Theme Integration**
+* Multiple authors byline support
+`<?php
+if(class_exists('WP_Post_Author')){ 
+    awpa_ma_multi_authors_list_post(); 
+} 
+?>`
 
  We are also working for the enhancement of the feature.
 
 <strong>[Try Live Demo](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author)</strong>
 <strong>[Explore More](https://afthemes.com/plugins/wp-post-author/)</strong>
-
-## 🔥 Welcome in for other amazing plugins from AF themes
-# AF themes
->The most flexible WordPress themes and plugins crafted for the future web.
-
-🔔 **Check all of our [plugins](https://afthemes.com/plugins/)**
-👉 [Templatespare - 1000+ Starter Sites & Templates, Import, Personalize, Go Live](https://templatespare.com)
-👉 [Blockspare - Page Builder Gutenberg Blocks, Patterns & Starter Sites](https://blockspare.com)
-👉 [Elespare - Ultimate Blog Addons for Elementor, Widgets, Templates & Starter Sites](https://elespare.com)
-👉 [Latest Posts Block](https://afthemes.com/plugins/latest-posts-block/)
-👉 [Magic Content Box](https://afthemes.com/plugins/magic-content-box/)
-👉 [Pricing Table Block](https://afthemes.com/plugins/pricing-table-block/)
-👉 [Team and Testimonial Block](https://afthemes.com/plugins/team-and-testimonial-block/)
-
-
-## Get the outstanding themes from AF themes
-🔔 Check all of our [Free](https://afthemes.com/products/category/free/) themes
-👉 [CoverNews](https://afthemes.com/products/covernews/)
-👉 [ChromeNews](https://afthemes.com/products/chromenews/)
-👉 [MoreNews](https://afthemes.com/products/morenews/)
-👉 [EnterNews](https://afthemes.com/products/enternews/)
-👉 [DarkNews](https://afthemes.com/products/darknews/)
-👉 [Newsium](https://afthemes.com/products/newsium/)
-👉 [Newsever](https://afthemes.com/products/newsever/)
-👉 [Newsphere](https://afthemes.com/products/newsphere/)
-👉 [Shopical](https://afthemes.com/products/shopical/)
-👉 [StoreCommerce](https://afthemes.com/products/storecommerce/)
-👉 [Elegant Magazine](https://afthemes.com/products/elegant-magazine/)
-👉 [BroadNews](https://afthemes.com/products/broadnews/)
-👉 [And More..](https://afthemes.com/products/category/free/)
-
-🔔 Check all of our [Premium](https://afthemes.com/products/category/pro/) themes
-👉 [CoverNews Pro](https://afthemes.com/products/covernews-pro/)
-👉 [ChromeNews Pro](https://afthemes.com/products/chromenews-pro/)
-👉 [MoreNews Pro](https://afthemes.com/products/morenews-pro/)
-👉 [EnterNews Pro](https://afthemes.com/products/enternews-pro/)
-👉 [DarkNews Pro](https://afthemes.com/products/darknews-pro/)
-👉 [Newsium Pro](https://afthemes.com/products/newsium-pro/)
-👉 [Newsever Pro](https://afthemes.com/products/newsever-pro/)
-👉 [Newsphere Pro](https://afthemes.com/products/newsphere-pro/)
-👉 [Shopical Pro](https://afthemes.com/products/shopical-pro/)
-👉 [StoreCommerce Pro](https://afthemes.com/products/storecommerce-pro/)
-👉 [Elegant Magazine Pro](https://afthemes.com/products/elegant-magazine-pro/)
-👉 [BroadNews Pro](https://afthemes.com/products/broadnews-pro/)
-👉 [And More..](https://afthemes.com/products/category/pro/)
 
 
 == Installation ==

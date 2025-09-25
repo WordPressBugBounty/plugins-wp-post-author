@@ -2,8 +2,8 @@
 /** 
  * Plugin Name:       WP Post Author
  * Plugin URI:        https://afthemes.com/plugins/wp-post-author/
- * Description:       Boost Your Blog’s Engagement with WP Post Author: Add an Author Box, Social Links, Co-Authors, Guest Authors, Post Rating System, and Custom User Registration Form Builder.
- * Version:           3.8.4
+ * Description:       Display author boxes, social links, co-authors, guest authors, post rating system, and user registration forms.
+ * Version:           3.8.5
  * Author:            AF themes
  * Author URI:        https://afthemes.com
  * Text Domain:       wp-post-author
@@ -23,7 +23,7 @@ if (!class_exists('WP_Post_Author')):
          *
          * @var string
          */
-        const VERSION = '3.8.4';
+        const VERSION = '3.8.5';
 
         /**
          * Instance of this class.
