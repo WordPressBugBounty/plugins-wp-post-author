@@ -1,89 +1,119 @@
-﻿=== WP Post Author - Author Box, Co-Authors & Guest Authors ===
+﻿=== WP Post Author – Author Box, Multiple Authors, Guest Authors & Custom Avatars ===
 Contributors: afthemes
-Tags: author, author bio, author box, multiple authors, users
+Tags: author box, author bio, guest author, local avatars, custom avatars, co-authors
 Donate link: https://afthemes.com/plugins/wp-post-author
 Requires at least: 3.0
 Tested up to: 6.9
-Stable tag: 3.8.7
+Stable tag: 3.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display author boxes, social links, co-authors, guest authors, post rating system, and user registration forms.
+WP Post Author is the ultimate solution for an Author Box, Multiple Authors, Guest Authors, and Local Avatars. Easily manage Author Bios, Co-authors, and User Registration forms to boost your site's credibility.
 
 == Description ==
-WP Post Author provides a complete solution for displaying author information, managing multiple authors, collecting post ratings, and creating user registration forms.
+**Author Box, Multiple Authors, Guest Authors, Local Avatars, Post Ratings & Registration Forms for WordPress**
 
-Features include:
-* Customizable Author Box
-* Co-Authors and Guest Authors support
-* Post Rating System
-* Recommended Posts
-* User Registration Form Builder
-* Gutenberg Blocks, Widgets, and Shortcodes
+**[WP Post Author](https://afthemes.com/plugins/wp-post-author/)** is a powerful and flexible WordPress plugin that provides a complete solution for **displaying author information, managing multiple authors and guest authors, hosting local avatars, collecting post ratings, and creating user registration & login forms**—without writing code.
 
-Live demo: [Try It Now](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author)  
-Documentation: [Docs](https://afthemes.com/plugins/wp-post-author/docs/)  
-Video Tutorials: [YouTube Playlist](https://www.youtube.com/watch?v=J5VIXAljuBg&list=PL8nUD79gscmjMx2DC7dVCkVYhoGruezzp)  
-Support: [AFThemes Support](https://afthemes.com/supports/)
+Whether you need a simple **Author Bio Box** or a complex system for **Co-authors**, this plugin is ideal for **blogs, news portals, magazines, and multi-author websites** looking to improve credibility, engagement, and editorial workflows.
 
-== Features ==
+[Live Demo](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author) | [Documentation](https://afthemes.com/plugins/wp-post-author/docs/) | [Video Tutorials](https://www.youtube.com/watch?v=J5VIXAljuBg&list=PL8nUD79gscmjMx2DC7dVCkVYhoGruezzp) | [Support](https://afthemes.com/supports/)
 
-**Author Box**
-* Display author information on single posts or author pages
-* Section title, alignment, profile image shapes
-* Auto-append to content
-* Customizable settings, translatable strings
-* Gutenberg block, widgets, and shortcode support
-* PRO: Profile tab, latest posts, top rated posts, author rating, advanced color options
-* [YouTube Tutorial](https://www.youtube.com/watch?v=J5VIXAljuBg)
+---
 
-**Co-Authors**
-* Assign multiple authors to a post
-* Create, update, delete registered users in the post meta box
-* PRO: Author rating, profile tab, latest posts, top-rated posts, single/all author profile blocks
-* [YouTube Tutorial](https://www.youtube.com/watch?v=J5VIXAljuBg)
+## 🚀 Key Highlights
 
-**Guest Authors**
-* Manage guest authors from the dashboard
-* Add, edit, or delete guest authors
-* PRO: Guest author rating, profile tab, latest posts, top-rated posts, single/all guest author profile blocks
-* [YouTube Tutorial](https://www.youtube.com/watch?v=8qHrfDw0zCE)
+✅ Beautiful and customizable **Author Box** & **Author Bio**
+✅ Assign **multiple authors (co-authors)** to a post
+✅ Create and manage **guest authors** without user accounts
+✅ **New: Local Avatars** & **Custom Avatars** via Media Library (Stop Gravatar!)
+✅ Built-in **post rating system** for reader feedback
+✅ **Recommended posts** to boost engagement
+✅ Visual **login & registration form builder**
+✅ Fully compatible with **Gutenberg blocks, widgets, and shortcodes**
+✅ **Translation-ready** and modern theme-friendly
 
-**Post Rating System**
-* Enable logged-in readers to rate posts
-* Option to enable/disable globally or per post
-* PRO: Top rated posts block, ratings in dashboard, login/register page links
-* [YouTube Tutorial](https://www.youtube.com/watch?v=65OpbXOY8XU)
+---
 
-**Recommended Posts**
-* PRO: Auto append recommended posts to content, user-preference-based posts, advanced settings, Gutenberg block
+## 🛠 Key Features
 
-**Registration Form Builder**
-* Drag & drop registration form builder
-* Customizable login and registration forms
-* ReCaptcha V2/V3 support
-* PRO: Social fields, custom login/register page selection
-* [YouTube Tutorial](https://www.youtube.com/watch?v=c62vIfQiu-c)
+### 🧑‍💼 Professional Author Box
+* **Customizable Layouts:** Display author info on single posts and author pages with full control over titles, alignment, and shapes.
+* **Auto-Append:** Automatically insert the author bio box after post content for consistent branding.
+* **Local Avatars (New):** Upload custom profile images directly via the Media Library. **Bypass Gravatar** to improve site performance and privacy (GDPR friendly).
+* **Multiple Display Options:** Use the built-in **Gutenberg Block**, **Widget**, or **Shortcode** for total placement flexibility.
 
-**Gutenberg Blocks**
-* Author Box, Author Registration, Author Login
-* PRO: Single/All Author & Guest Author Bio, Top Rated Posts, Recommended Posts
-* [YouTube Tutorial](https://www.youtube.com/watch?v=S4jnoE-cFNA)
+**⚡ PRO Features:**
+* Interactive Profile Tabs and Latest/Top-rated posts.
+* Advanced color schemes and layout typography controls.
+* Author performance ratings.
 
-**Widgets**
-* Single post and author page author box
-* Specific and custom author widgets with social links and profile options
+---
 
-**Shortcodes**
-* `[wp-post-author]` – Display author box
-* `[awpa-registration-form]` – Display registration form
-* `[awpa-user-login]` – Display login form
+### 👥 Co-Authors & Multiple Authors
+* **Collaborative Publishing:** Assign **multiple registered users** to a single post or page.
+* **Easy Management:** Add, update, or reorder authors directly from the WordPress post editor.
+* **SEO Optimized:** Correctly attributes content to all authors for search engine credibility.
 
-**Social Links**
-* Facebook, Instagram, YouTube, Twitter, LinkedIn, Email, Website (display if available)
+**⚡ PRO Features:**
+* Dedicated "Single & All Author Profile" Gutenberg blocks.
+* Author ratings and profile tabs for multi-author layouts.
 
-**Theme Integration**
-* Multiple authors byline support
+[youtube https://www.youtube.com/watch?v=J5VIXAljuBg]
+
+---
+
+### 👨‍👩‍👧‍👦 Guest Authors (No Account Required)
+* **Unlimited Guest Profiles:** Create and manage guest authors without cluttering your WordPress User database.
+* **Full Profile Control:** Add custom bios and social links for external contributors easily.
+
+**⚡ PRO Features:**
+* Enable Guest Author ratings and specialized profile blocks.
+
+[youtube https://www.youtube.com/watch?v=8qHrfDw0zCE]
+
+---
+
+### ⭐ Post Rating & Engagement
+* **Interactive Feedback:** Allow logged-in users to rate your content to increase engagement.
+* **Global Controls:** Enable or disable ratings site-wide or on a per-post basis.
+
+**⚡ PRO Features:**
+* **Top-Rated Posts Block:** Display your most popular content automatically.
+* **Advanced Analytics:** View rating data directly in your dashboard.
+
+[youtube https://www.youtube.com/watch?v=65OpbXOY8XU]
+
+---
+
+### 💡 Recommended Posts (PRO)
+* **Smart Engagement:** Automatically append suggested content to keep readers on your site.
+* **User-Centric:** Display posts based on user preferences and categories.
+* **Custom Layouts:** Advanced filtering options with full Gutenberg block support.
+
+---
+
+### 🧩 Drag & Drop Registration Form Builder
+* **Custom Forms:** Create visually appealing **User Registration and Login forms** without code.
+* **Security First:** Built-in support for **Google reCAPTCHA v2 & v3** to prevent spam.
+* **Shortcode Ready:** Display forms anywhere using `[awpa-registration-form]` or `[awpa-user-login]`.
+
+**⚡ PRO Features:**
+* Custom social profile fields and dedicated landing page selection.
+
+[youtube https://www.youtube.com/watch?v=c62vIfQiu-c]
+
+---
+
+### 🌐 Social Link Integration
+Automatically connect and display icons for all major platforms:
+* Facebook, Instagram, YouTube, Twitter (X), LinkedIn, Email, and Personal Websites.
+
+## 🎨 Theme Integration
+WP Post Author works with all properly coded WordPress themes.
+
+To display multiple authors in your theme:
+
 `<?php
 if(class_exists('WP_Post_Author')){ 
     awpa_ma_multi_authors_list_post(); 
@@ -94,6 +124,35 @@ if(class_exists('WP_Post_Author')){
 
 <strong>[Try Live Demo](https://tastewp.com/new/?pre-installed-plugin-slug=wp-post-author)</strong>
 <strong>[Explore More](https://afthemes.com/plugins/wp-post-author/)</strong>
+
+## 🎯 Recommended Themes
+
+WP Post Author works with all modern WordPress themes and has been tested with:
+
+> - [NewSpare - Full Site Editing (FSE) Theme](https://wordpress.org/themes/newspare/) 
+> - [CoverNews](https://wordpress.org/themes/covernews/) 
+> - [ChromeNews](https://wordpress.org/themes/chromenews/) 
+> - [MoreNews](https://wordpress.org/themes/morenews/)
+> - [ReviewNews](https://wordpress.org/themes/reviewnews/) 
+> - [Newsphere](https://wordpress.org/themes/newsphere/) 
+> - Twenty Twenty-Five
+> - Astra
+> - Ocean WP
+> - Blocksy
+> - Kadence
+> - Generatepress
+> - Neve
+> - [And all themes from AF Themes](https://wordpress.org/themes/author/afthemes/) 
+
+## 🧩 Other Plugins by AF themes
+
+If you find WP Post Author useful, you may also like:
+
+> - [**TemplateSpare:**](https://wordpress.org/plugins/templatespare/) 1000+ starter templates and full site import/export solution.
+
+> - [**EleSpare:**](https://wordpress.org/plugins/wp-post-author/) News, magazine, and blog addons for Elementor.
+
+> - [**BlockSpare:**](https://wordpress.org/plugins/blockspare/) News, magazine, and blog addons for Gutenberg (Block Editor).
 
 
 == Installation ==
@@ -118,6 +177,14 @@ if(class_exists('WP_Post_Author')){
 11. WP Post Author Setting Panel
 
 == Changelog ==
+= 3.9.0 =
+* New: Local Avatars support – Users can now upload and assign custom profile pictures directly via the WordPress Media Library.
+* New: Performance optimization – Option to bypass Gravatar and host avatars locally for faster page loads and improved privacy (GDPR friendly).
+* New: AJAX-powered avatar management on the user profile page for a seamless experience.
+* Update: Enhanced security with strict nonce verification for all profile and avatar updates.
+* Update: WordPress 6.9 compatibility check and general script optimizations.
+* Update: Improved file handling for generated avatar sizes to comply with WP guidelines.
+
 = 3.8.3 =
 * Update: Security Improvement
 * Update: General Improvement

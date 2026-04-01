@@ -30,6 +30,7 @@ class WP_Post_Author_Backend
         $this->method_title = __('WP Post Author Backend', 'wp-post-author');
         $this->method_description = __('WP Post Author Backend', 'wp-post-author');
 
+        
         include_once 'awpa-user-fields.php';
 
         include_once AWPA_PLUGIN_DIR . '/includes/admin/awpa-form-register.php';
@@ -40,6 +41,7 @@ class WP_Post_Author_Backend
         include_once AWPA_PLUGIN_DIR . '/includes/awpa-widget.php';
         include_once AWPA_PLUGIN_DIR . '/includes/awpa-widget-custom.php';
         include_once AWPA_PLUGIN_DIR . '/includes/awpa-widget-specific.php';
+        include_once AWPA_PLUGIN_DIR . '/includes/awpa-local-avatar.php';
         
 
         add_action('widgets_init', array($this, 'awpa_widgets_init'));

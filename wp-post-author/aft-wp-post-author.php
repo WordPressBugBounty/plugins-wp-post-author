@@ -1,9 +1,10 @@
 <?php
+
 /** 
  * Plugin Name:       WP Post Author
  * Plugin URI:        https://afthemes.com/plugins/wp-post-author/
- * Description:       Display author boxes, social links, co-authors, guest authors, post rating system, and user registration forms.
- * Version:           3.8.7
+ * Description:       Boost Your Blog’s Engagement with WP Post Author: Add an Author Box, Social Links, Co-Authors, Guest Authors, Post Rating System, and Custom User Registration Form Builder.
+ * Version:           3.9.0
  * Author:            AF themes
  * Author URI:        https://afthemes.com
  * Text Domain:       wp-post-author
@@ -13,17 +14,17 @@
 
 defined('ABSPATH') or die('No script kiddies please!'); // prevent direct access
 
-if (!class_exists('WP_Post_Author')):
+if (!class_exists('WP_Post_Author')) :
 
     class WP_Post_Author
-{
+    {
 
         /**
          * Plugin version.
          *
          * @var string
          */
-        const VERSION = '3.8.7';
+        const VERSION = '3.8.3';
 
         /**
          * Instance of this class.
@@ -38,7 +39,7 @@ if (!class_exists('WP_Post_Author')):
          * @return object A single instance of this class.
          */
         public static function get_instance()
-    {
+        {
             // If the single instance hasn't been set, set it now.
             if (null == self::$instance) {
                 self::$instance = new self;
@@ -51,11 +52,11 @@ if (!class_exists('WP_Post_Author')):
          * Initialize the plugin.
          */
         public function __construct()
-    {
+        {
             /**
              * Define global constants
              **/
-            define('AWPA_VERSION', '3.6.4');
+            define('AWPA_VERSION', '3.6.2');
             defined('AWPA_BASE_FILE') or define('AWPA_BASE_FILE', __FILE__);
             defined('AWPA_BASE_DIR') or define('AWPA_BASE_DIR', dirname(AWPA_BASE_FILE));
             defined('AWPA_PLUGIN_BASE') or define('AWPA_PLUGIN_BASE', plugin_basename(AWPA_BASE_FILE));
@@ -74,12 +75,10 @@ if (!class_exists('WP_Post_Author')):
             }
             add_action('init', [$this, 'awpa_load_core_files']);
             add_action('awpa_call_seeder_function', array($this, 'awpa_hook_call_seeder_function'), 10);
-
-            
         } // end of contructor
 
         public function awpa_load_core_files()
-    {
+        {
 
             include_once 'includes/core.php';
             include_once 'includes/fonts.php';
@@ -87,6 +86,7 @@ if (!class_exists('WP_Post_Author')):
             include_once 'includes/api-request/free/request-add.php';
             include_once 'includes/rating/awpa-rating.php';
             include_once 'includes/top-rated-post.php';
+            // include_once 'includes/awpa-local-avatar.php';
             include_once AWPA_BASE_DIR . '/includes/multi-authors/wpa-multi-authors.php';
             $options = get_option('awpa_setting_options');
             if ($options) {
@@ -107,7 +107,7 @@ if (!class_exists('WP_Post_Author')):
         }
 
         public function awpa_hook_call_seeder_function()
-    {
+        {
             $awpa_seed_inserted = get_option('awpa_seed_insert');
             if (!$awpa_seed_inserted) {
                 include_once 'includes/database/seeder-db.php';
