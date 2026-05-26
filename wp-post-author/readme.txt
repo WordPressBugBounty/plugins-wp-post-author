@@ -3,8 +3,8 @@ Contributors: afthemes
 Tags: author box, author bio, guest author, local avatars, custom avatars, co-authors
 Donate link: https://afthemes.com/plugins/wp-post-author
 Requires at least: 3.0
-Tested up to: 6.9
-Stable tag: 3.9.0
+Tested up to: 7.0
+Stable tag: 3.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
