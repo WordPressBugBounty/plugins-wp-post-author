@@ -101,23 +101,51 @@ class WPAMultiAuthors
 
   public function awpa_ma_save_metabox($post_id)
   {
+    // Fix 1: Verify WordPress Post Auto-Save state to maintain structural integrity
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Fix 2: Cryptographic Nonce verification to mitigate Cross-Site Request Forgery (CSRF)
+    if (!isset($_POST['wpma_meta_box_nonce']) || !wp_verify_nonce($_POST['wpma_meta_box_nonce'], basename(__FILE__))) {
+        return;
+    }
+
+    // Fix 3: Ensure current authenticated identity possesses the explicit capability map
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
 
     $coauthors = get_post_meta($post_id, 'wpma_coauthors', true);
     if (gettype($coauthors) == 'string' || gettype($coauthors) == false) {
       $coauthors = array();
     }
 
-    $author_list = isset($_POST['wpma_metabox_authors_list']) ? $_POST['wpma_metabox_authors_list'] : array();
+    $author_list = isset($_POST['wpma_metabox_authors_list']) ? $_POST['wpma_metabox_authors_list'] : '';
 
     $first_author = false;
-    if ($author_list) {
+    if (!empty($author_list) && is_string($author_list)) {
       $data = explode(',', $author_list);
       delete_post_meta($post_id, 'wpma_author');
+      
       foreach ($data as $key => $user_id) {
-        $userid = sanitize_text_field($user_id);
-        add_post_meta($post_id, 'wpma_author', $user_id);
-        if (!str_contains('guest', $user_id)) {
-          $user = get_user_by('ID', $user_id);
+        $user_id = trim($user_id);
+        
+        // Fix 4: Robust input verification. Token MUST be purely numeric OR match precise regex '^guest-\d+$'
+        if (preg_match('/^guest-(\d+)$/', $user_id, $matches)) {
+            // Re-assign explicitly mapped structured components to bypass parameter injection vectors
+            $sanitized_id = 'guest-' . intval($matches);
+        } elseif (is_numeric($user_id)) {
+            $sanitized_id = intval($user_id);
+        } else {
+            // Malformed token detected; reject data to close potential injection paths
+            continue;
+        }
+
+        add_post_meta($post_id, 'wpma_author', $sanitized_id);
+        
+        if (is_numeric($sanitized_id)) {
+          $user = get_user_by('ID', $sanitized_id);
           if ($user && $first_author == false) {
             $requried_role_string = "administrator editor author";
             $roles = $user->roles;
@@ -126,7 +154,7 @@ class WPAMultiAuthors
                 remove_action('save_post', array($this, 'awpa_ma_save_metabox'), 10);
                 $arg = array(
                   'ID' => $post_id,
-                  'post_author' => $user_id,
+                  'post_author' => $sanitized_id,
                 );
                 $arg = array_map('intval', $arg);
                 wp_update_post($arg);
@@ -201,12 +229,16 @@ class WPAMultiAuthors
     foreach ($users as $key => $user) {
 
       $user_meta = get_userdata($user->ID);
-      $user_roles = $user_meta->roles;
+      
+      // Fallback logic if roles array is empty or malformed
+      $user_roles = (!empty($user_meta->roles) && is_array($user_meta->roles)) ? $user_meta->roles : array('author');
+      $primary_role = is_string($user_roles) ? $user_roles : 'author';
+
       $users_id_array[] = array(
         'user' => $user,
         'id' => $user->ID,
         'is_active' => true,
-        'type' => ucfirst($user_roles[0]),
+        'type' => ucfirst($primary_role),
       );
     }
 
@@ -226,8 +258,8 @@ class WPAMultiAuthors
     }
     $count = 1;
     foreach ($coauthors as $key => $author_id) {
-      if (preg_match('/\bguest-\b/', $author_id)) {
-        $guest_id = str_replace('guest-', '', $author_id);
+      if (preg_match('/^guest-(\d+)$/', $author_id, $matches)) {
+        $guest_id = intval($matches);
         $guest_author = $this->awpa_ma_get_guest_author($guest_id);
         if ($guest_author) {
           $args = array(
@@ -273,8 +305,8 @@ class WPAMultiAuthors
     }
     $count = 1;
     foreach ($coauthors as $key => $author_id) {
-      if (preg_match('/\bguest-\b/', $author_id)) {
-        $guest_id = str_replace('guest-', '', $author_id);
+      if (preg_match('/^guest-(\d+)$/', $author_id, $matches)) {
+        $guest_id = intval($matches);
         $guest_author = $this->awpa_ma_get_guest_author($guest_id);
         if ($guest_author) {
           $permalink_structure = get_option('permalink_structure');
@@ -305,20 +337,34 @@ class WPAMultiAuthors
       }
     }
   }
+
   public function awpa_ma_get_guest_author($guest_id)
   {
     global $wpdb;
+    
+    // Fix 5: Cast explicitly to scalar integer to neutralize unescaped string injection paths
+    $guest_id = intval($guest_id);
+    if ($guest_id <= 0) {
+        return false;
+    }
+
     $table_name = $wpdb->prefix . "wpa_guest_authors";
-    $query = "SELECT id, user_email, display_name, user_nicename FROM $table_name where id = $guest_id";
+    
+    // Fix 6: Use $wpdb->prepare format safely handling parameters via the %d integer literal mapping
+    $query = $wpdb->prepare(
+        "SELECT id, user_email, display_name, user_nicename FROM {$table_name} WHERE id = %d", 
+        $guest_id
+    );
+    
     $guest_author = $wpdb->get_results($query, OBJECT);
 
-    return $guest_author ? $guest_author[0] : false;
+    return $guest_author ? $guest_author : false;
   }
   public function awpa_ma_change_user_capabilities($allcaps, $caps, $args)
   {
-    $cap = $args[0];
-    $user_id = isset($args[1]) ? $args[1] : 0;
-    $post_id = isset($args[2]) ? $args[2] : 0;
+    $cap = $args;
+    $user_id = isset($args) ? $args : 0;
+    $post_id = isset($args) ? $args : 0;
     $multiauthors = get_post_meta($post_id, 'wpma_author');
     $current_user = wp_get_current_user();
 
@@ -384,9 +430,11 @@ class WPAMultiAuthors
           if (is_admin()) { //check if backend panel
             if ($linked_author) {
               wp_redirect(admin_url("/edit.php?author_name=" . $linked_author->user_nicename), 301);
+              exit; // Always add exit after redirect calls
             }
           } else {
             wp_redirect(home_url('/author/' . $linked_author->user_nicename), 301);
+            exit;
           }
         } else {
           $join .= " INNER JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id ";
@@ -422,12 +470,17 @@ class WPAMultiAuthors
         if ($guest_author && $guest_author->is_active == "1") { //guest is linked and is active
           $where = preg_replace('/AND\s*\((?:' . $wpdb->posts . '\.)?post_author\s*\=\s*\d+\)/', ' ', $where);
           $where = preg_replace('/AND\s*' . $wpdb->posts . '\.post_author\s*IN\s*\([0-9]*\)/', ' ', $where, 1);
+          
+          // Secure guest integer references
+          $clean_guest_id = intval($guest_author->id);
+          $clean_linked_user_id = intval($guest_author->linked_user_id);
+          
           if ($guest_author->linked_user_id != "0" && $guest_author->is_linked == "1") { //guest has linked user and is linked
-            $where .= " AND ($wpdb->postmeta.meta_value = 'guest-{$guest_author->id}'
-                                        OR ($wpdb->postmeta.meta_key = 'wpma_author' AND $wpdb->postmeta.meta_value = '{$guest_author->linked_user_id}')
-                                        OR $wpdb->posts.post_author = '{$guest_author->linked_user_id}')";
+            $where .= " AND ($wpdb->postmeta.meta_value = 'guest-{$clean_guest_id}'
+                                        OR ($wpdb->postmeta.meta_key = 'wpma_author' AND $wpdb->postmeta.meta_value = '{$clean_linked_user_id}')
+                                        OR $wpdb->posts.post_author = '{$clean_linked_user_id}')";
           } else {
-            $where .= " AND ($wpdb->postmeta.meta_value = 'guest-{$guest_author->id}')";
+            $where .= " AND ($wpdb->postmeta.meta_value = 'guest-{$clean_guest_id}')";
           }
           return $where;
         } else {
@@ -442,7 +495,7 @@ class WPAMultiAuthors
           $where .= " AND (
                                     ($wpdb->posts.post_author = {$author_id}) OR
                                     ($wpdb->postmeta.meta_key = 'wpma_author' AND $wpdb->postmeta.meta_value = {$author_id})
-                                    OR ($wpdb->postmeta.meta_key = 'wpma_author' AND $wpdb->postmeta.meta_value = 'guest-{$guest_author->id}'))";
+                                    OR ($wpdb->postmeta.meta_key = 'wpma_author' AND $wpdb->postmeta.meta_value = 'guest-{$author_id}'))";
         } else {
           $where .= " AND (
                             ($wpdb->posts.post_author = {$author_id}) OR
@@ -488,12 +541,9 @@ class WPAMultiAuthors
   {
     global $wpdb;
     $table_name = $wpdb->prefix . 'wpa_guest_authors';
-    $row = $wpdb->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND TABLE_SCHEMA = '$wpdb->dbname' AND COLUMN_NAME = 'user_nicename'");
-    if ($row) {
-      if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) {
-        $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE user_nicename = %s", $value));
-        return $data;
-      }
+    // Validate table existence using fixed safe literal context strings to eliminate information schema leakage
+    if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name) {
+        return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$table_name} WHERE user_nicename = %s", $value));
     }
     return false;
   }
@@ -501,7 +551,7 @@ class WPAMultiAuthors
   public function apwa_ma_get_guest_by_linked_user_id($author_id)
   {
     global $wpdb;
-    return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wpa_guest_authors WHERE linked_user_id = %s", $author_id));
+    return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wpa_guest_authors WHERE linked_user_id = %d", intval($author_id)));
   }
 
   public function awpa_ma_register_backend_scripts()
@@ -510,7 +560,7 @@ class WPAMultiAuthors
 
     $awpa_current_screent = get_current_screen();
 
-    if ($awpa_current_screent->post_type == 'post') {
+    if ($awpa_current_screent && $awpa_current_screent->post_type == 'post') {
       if ($this->awpa_is_edit_page('new') || $this->awpa_is_edit_page('edit')) {
         wp_enqueue_script('authors-metabox', AWPA_PLUGIN_URL . 'assets/dist/authors_metabox.build.js', array(), AWPA_VERSION, true);
       }
