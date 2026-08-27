@@ -1,10 +1,10 @@
 ﻿=== WP Post Author – Author Box, Multiple Authors, Guest Authors & Custom Avatars ===
 Contributors: afthemes
-Tags: author box, author bio, guest author, local avatars, custom avatars, co-authors
+Tags: author box, author profile, author social icons, author bio, guest author
 Donate link: https://afthemes.com/plugins/wp-post-author
 Requires at least: 3.0
-Tested up to: 7.0
-Stable tag: 3.10.0
+Tested up to: 7.1
+Stable tag: 3.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
