@@ -47,8 +47,6 @@ class WP_Post_Author_Core
     $awpa_settings = new Awpa_Settings_Rest_Controller();
     $awpa_settings->awpa_settings_register_routes();
 
-    $awpa_membership = new Awpa_Registered_Users_Rest_Controller();
-    $awpa_membership->awpa_registered_user_register_routes();
 
     $awpa_form_builder = new Awpa_Formbuilder_Rest_Controller();
     $awpa_form_builder->awpa_formbuilder_register_routes();
@@ -72,7 +70,7 @@ class WP_Post_Author_Core
   public function awpa_pro_api_post_rating_review_user_list()
   {
     $post_id = $_GET['post_id'];
-   $awpa_rating_data= get_post_meta($post_id, 'awpa_pro_post_5_star_rating_review', true);
+    $awpa_rating_data = get_post_meta($post_id, 'awpa_pro_post_5_star_rating_review', true);
     if (!empty($awpa_rating_data) && is_array($awpa_rating_data)) {
 
       $rating_with_user = array();

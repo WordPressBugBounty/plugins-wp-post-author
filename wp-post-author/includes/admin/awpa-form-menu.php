@@ -17,8 +17,8 @@ function awpa_settings_menu($hook)
 
   add_submenu_page(
     'wp-post-author',
-    __('Advanced Settings', 'wp-post-author'),
-    __('Advanced Settings', 'wp-post-author'),
+    __('Dashboard', 'wp-post-author'),
+    __('Dashboard', 'wp-post-author'),
     'manage_options',
     'wp-post-author',
     'awpa_settings_page'
@@ -26,21 +26,12 @@ function awpa_settings_menu($hook)
 
   add_submenu_page(
     'wp-post-author',
-    __('Registration Forms', 'wp-post-author'),
-    __('Registration Forms', 'wp-post-author'),
+    __('Form Builder', 'wp-post-author'),
+    __('Form Builder', 'wp-post-author'),
     'manage_options',
     'awpa-registration-form',
     'awpa_user_registration_page'
   );
-
-  // add_submenu_page(
-  //   'wp-post-author',
-  //   __('Registered Users', 'wp-post-author'),
-  //   __('Registered  Users', 'wp-post-author'),
-  //   'manage_options',
-  //   'awpa-members',
-  //   'awpa_members_page'
-  // );
 
   $author_metabox = awpa_get_author_metabox_setting();
   if ($author_metabox && $author_metabox['enable_author_metabox']) {
@@ -53,6 +44,30 @@ function awpa_settings_menu($hook)
       'awpa_multi_authors_page'
     );
   }
+
+  add_submenu_page(
+    'wp-post-author',
+    __('Free Themes ↗', 'wp-post-author'),
+    __('Free Themes ↗', 'wp-post-author'),
+    'manage_options',
+    esc_url('https://afthemes.com/products/category/free/')
+  );
+  add_submenu_page(
+    'wp-post-author',
+    __('Pro Themes ↗', 'wp-post-author'),
+    __('Pro Themes ↗', 'wp-post-author'),
+    'manage_options',
+    esc_url('https://afthemes.com/products/category/pro/')
+  );
+
+  add_submenu_page(
+    'wp-post-author',
+    __('Starter Sites ↗', 'wp-post-author'),
+    __('Starter Sites ↗', 'wp-post-author'),
+    'manage_options',
+    esc_url('https://afthemes.com/starter-sites/')
+  );
+  
 }
 add_action('admin_menu', 'awpa_settings_menu', 60);
 
@@ -80,12 +95,6 @@ function awpa_add_registration_page()
 }
 
 
-function awpa_members_page()
-{
-?>
-  <div id="afwrap-membership-dashboard"></div>
-<?php
-}
 
 
 function awpa_multi_authors_page()

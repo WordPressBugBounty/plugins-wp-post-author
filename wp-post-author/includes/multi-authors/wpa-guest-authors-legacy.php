@@ -1,9 +1,8 @@
 <?php
 defined('ABSPATH') or die('No script kiddies please!');
-
 /**
  * Register Admin Submenu Page for Migration & Meta Repair.
- * Menu remains accessible if legacy guests OR orphaned postmeta exist.
+ * Optimized to prevent full table scans on every admin page load.
  */
 function awpa_register_legacy_migration_menu()
 {
@@ -11,30 +10,42 @@ function awpa_register_legacy_migration_menu()
         return;
     }
 
-    global $wpdb;
-    $table_name = $wpdb->prefix . "wpa_guest_authors";
-    
-    $table_exists = ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name);
-    $guest_count  = $table_exists ? (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name}") : 0;
-    
-    // Check if orphaned postmeta entries exist even if the guest table is empty/deleted
-    $orphaned_meta_count = (int) $wpdb->get_var(
-        "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%guest-%'"
-    );
+    // Check transient cache first to avoid repetitive DB checks on every page load
+    $show_menu = get_transient('awpa_show_legacy_migration_menu');
 
-    if ($guest_count > 0 || $orphaned_meta_count > 0) {
-        $badge = $guest_count > 0 ? sprintf(' (%d)', $guest_count) : '';
+    if (false === $show_menu) {
+        global $wpdb;
+        $table_name  =$wpdb->prefix . "wpa_guest_authors";
+        $table_exists = ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name);$guest_count = $table_exists ? (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_name}") : 0;
+        
+        $has_orphaned_meta = false;
+
+        // Only check postmeta if no legacy guests exist in the custom table
+        if ($guest_count === 0) {
+            // Fast EXISTS check with LIMIT 1 instead of expensive COUNT(*) full table scan
+            $has_orphaned_meta = (bool)$wpdb->get_var(
+                "SELECT 1 FROM {$wpdb->postmeta} WHERE meta_value LIKE '%guest-%' LIMIT 1"
+            );
+        }
+
+        $show_menu = ($guest_count > 0 || $has_orphaned_meta) ? 'yes' : 'no';
+
+        // Cache the menu status for 12 hours
+        set_transient('awpa_show_legacy_migration_menu', $show_menu, 12 * HOUR_IN_SECONDS);
+    }
+
+    if ('yes' === $show_menu) {
         add_submenu_page(
             'wp-post-author',
             __('Migrate Legacy Guests', 'wp-post-author'),
-            __('Migrate Guests', 'wp-post-author') . $badge,
+            __('Migrate Guests', 'wp-post-author'),
             'manage_options',
             'awpa-legacy-migration',
             'awpa_render_legacy_migration_page'
         );
     }
 }
-add_action('admin_menu', 'awpa_register_legacy_migration_menu', 65);
+add_action('admin_menu', 'awpa_register_legacy_migration_menu', 60);
 
 /**
  * Safely unserialize data disabling PHP object instantiation.
@@ -52,7 +63,7 @@ function awpa_safe_unserialize($data)
  */
 function awpa_get_user_id_by_legacy_guest_id($guest_id)
 {
-    $guest_id = (int) $guest_id;
+    $guest_id = (int)$guest_id;
     if ($guest_id <= 0) {
         return false;
     }
@@ -64,7 +75,7 @@ function awpa_get_user_id_by_legacy_guest_id($guest_id)
         'fields'     => 'ID',
     ));
 
-    return !empty($users) ? (int) $users[0] : false;
+    return !empty($users) ? (int)$users[0] : false;
 }
 
 /**
@@ -73,9 +84,9 @@ function awpa_get_user_id_by_legacy_guest_id($guest_id)
 function awpa_migrate_single_guest_author($guest_id)
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . "wpa_guest_authors";
+    $table_name =$wpdb->prefix . "wpa_guest_authors";
 
-    $guest = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$table_name} WHERE id = %d", $guest_id));
+    $guest =$wpdb->get_row($wpdb->prepare("SELECT * FROM {$table_name} WHERE id = %d", $guest_id));
     if (!$guest) {
         return new WP_Error('not_found', __('Legacy guest author not found.', 'wp-post-author'));
     }
@@ -83,12 +94,12 @@ function awpa_migrate_single_guest_author($guest_id)
     // 1. Email & Username Sanitization
     $email = sanitize_email($guest->user_email);
     if (empty($email) || email_exists($email)) {
-        $email = 'guest_' . $guest->id . '_' . wp_generate_password(8, false) . '@no-reply.local';
+        $email = 'guest_' .$guest->id . '_' . wp_generate_password(8, false) . '@no-reply.local';
     }
 
     $username = sanitize_user($guest->user_nicename, true);
     if (empty($username) || username_exists($username)) {
-        $username = 'guest_author_' . $guest->id;
+        $username = 'guest_author_' .$guest->id;
     }
 
     // 2. Account Creation
@@ -96,7 +107,7 @@ function awpa_migrate_single_guest_author($guest_id)
         'user_login'   => $username,
         'user_pass'    => wp_generate_password(32, true, true),
         'user_email'   => $email,
-        'display_name' => !empty($guest->display_name) ? sanitize_text_field($guest->display_name) : $username,
+        'display_name' => !empty($guest->display_name) ? sanitize_text_field($guest->display_name) :$username,
         'first_name'   => sanitize_text_field($guest->first_name),
         'last_name'    => sanitize_text_field($guest->last_name),
         'user_url'     => esc_url_raw($guest->website),
@@ -186,11 +197,15 @@ function awpa_migrate_single_guest_author($guest_id)
     // Delete migrated record from legacy database table
     $wpdb->delete($table_name, array('id' =>$guest->id), array('%d'));
 
+    // Clear menu transient cache after a migration run
+    delete_transient('awpa_show_legacy_migration_menu');
+
     return $user_id;
 }
 
 /**
  * Render Legacy Migration & Postmeta Repair Control Panel.
+ * Heavy count queries run ONLY on this dedicated admin screen.
  */
 function awpa_render_legacy_migration_page()
 {
@@ -199,14 +214,20 @@ function awpa_render_legacy_migration_page()
     }
 
     global $wpdb;
-    $table_name =$wpdb->prefix . "wpa_guest_authors";
+    $table_name   =$wpdb->prefix . "wpa_guest_authors";
     $table_exists = ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) ===$table_name);
     
     $guests =$table_exists ? $wpdb->get_results("SELECT * FROM {$table_name} ORDER BY id ASC") : array();
     
+    // Heavy full count runs ONLY when the admin views this specific page
     $orphaned_meta_count = (int)$wpdb->get_var(
         "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%guest-%'"
     );
+
+    // If no data left to migrate/repair, clear transient so menu disappears on next page load
+    if (empty($guests) &&$orphaned_meta_count === 0) {
+        delete_transient('awpa_show_legacy_migration_menu');
+    }
 
     $js_vars = array(
         'ajax_url' => admin_url('admin-ajax.php'),
@@ -471,6 +492,11 @@ function awpa_ajax_batch_repair_postmeta_handler()
     $remaining = (int)$wpdb->get_var(
         "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%guest-%'"
     );
+
+    // Reset transient if repair is complete
+    if ($remaining === 0) {
+        delete_transient('awpa_show_legacy_migration_menu');
+    }
 
     wp_send_json_success(array(
         'repaired'  => $repaired_count,

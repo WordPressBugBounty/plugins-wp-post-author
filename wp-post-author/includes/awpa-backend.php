@@ -132,24 +132,7 @@ class WP_Post_Author_Backend
       );
     }
 
-    if ('wp-post-author_page_awpa-members' == $hook) {
 
-      wp_enqueue_script(
-        'wpauthor-membership-build-js',
-        AWPA_PLUGIN_URL . 'assets/dist/membership.build.js',
-        array('wp-blocks', 'wp-i18n', 'wp-api-fetch', 'wp-element', 'wp-components', 'wp-editor'),
-        AWPA_VERSION,
-        true
-      );
-
-      wp_localize_script(
-        'wpauthor-membership-build-js',
-        'wpauthor_member_data',
-        array(
-          'adminUrl' => site_url()
-        )
-      );
-    }
 
     if ('toplevel_page_wp-post-author' == $hook) {
       wp_enqueue_style('react-toggle-styles-admin', AWPA_PLUGIN_URL . '/assets/css/react-toggle.css', array(), AWPA_VERSION);

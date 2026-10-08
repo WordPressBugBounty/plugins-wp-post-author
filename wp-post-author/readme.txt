@@ -4,7 +4,7 @@ Tags: author box, author profile, author social icons, author bio, guest author
 Donate link: https://afthemes.com/plugins/wp-post-author
 Requires at least: 3.0
 Tested up to: 7.1
-Stable tag: 4.0.1
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,17 @@ If you find WP Post Author useful, you may also like:
 11. WP Post Author Setting Panel
 
 == Changelog ==
+= 4.1.0 =
+* Security: Fixed an SQL injection vulnerability in the Membership and Registered Users functionality.
+* Fixed performance issues that could cause slow wp-admin page loads on websites with large post meta tables.
+* Improved legacy guest author migration functionality to avoid unnecessary database queries on every admin page load.
+* Improved Guest Authors functionality and handling.
+* Removed unused membership registration classes and JavaScript files.
+* Removed legacy and unused code for improved plugin performance and maintainability.
+* Improved menu naming and admin navigation.
+* Updated plugin version information.
+
+
 = 4.0.0 =
 * Security: Fixed authenticated SQL injection vulnerabilities in the Guest Authors and Membership Listing REST API endpoints.
 * Added migration support for legacy guest authors.
