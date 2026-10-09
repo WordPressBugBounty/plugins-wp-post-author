@@ -45,7 +45,7 @@ function awpa_register_legacy_migration_menu()
         );
     }
 }
-add_action('admin_menu', 'awpa_register_legacy_migration_menu', 60);
+add_action('admin_menu', 'awpa_register_legacy_migration_menu', 65);
 
 /**
  * Safely unserialize data disabling PHP object instantiation.
