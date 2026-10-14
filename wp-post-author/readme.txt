@@ -4,7 +4,7 @@ Tags: author box, author profile, author social icons, author bio, guest author
 Donate link: https://afthemes.com/plugins/wp-post-author
 Requires at least: 3.0
 Tested up to: 7.1
-Stable tag: 4.1.1
+Stable tag: 4.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ If you find WP Post Author useful, you may also like:
 > - [**EleSpare:**](https://wordpress.org/plugins/wp-post-author/) News, magazine, and blog addons for Elementor.
 
 > - [**BlockSpare:**](https://wordpress.org/plugins/blockspare/) News, magazine, and blog addons for Gutenberg (Block Editor).
+
+> - [**AF Companion:**](https://wordpress.org/plugins/af-companion/) Speed Booster & Growth Suite for Professional Publishing.
+
+> - [**AF Translate:**](https://wordpress.org/plugins/af-translate/) AI Translation Editor, PO Editor & POT Generator for WordPress.
 
 
 == Installation ==
