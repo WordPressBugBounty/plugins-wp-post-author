@@ -87,7 +87,16 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
       foreach ($membership_plans as $key => $plan) {
         array_push($response['membership_plan'], $this->get_membership_plans_by_id($plan['id']));
       }
-      $response['recaptcha_integration'] = awpa_post_author_integration_setting();
+      $integration = awpa_post_author_integration_setting();
+      $recaptcha_ready = !empty($integration['enable_recaptcha'])
+        && !empty($integration['site_key'])
+        && !empty($integration['secret_key']);
+
+      $response['recaptcha_integration'] = array(
+        'enable_recaptcha'  => $recaptcha_ready,
+        'recaptcha_version' => isset($integration['recaptcha_version']) ? $integration['recaptcha_version'] : 'v2',
+        'site_key'          => $recaptcha_ready ? $integration['site_key'] : '',
+      );
       $response['wp_upload_dir'] = wp_upload_dir();
 
       return $response;
@@ -220,18 +229,27 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
 
     public function awpa_register_user(\WP_REST_Request $request)
     {
+      // Still commented out on purpose. Uncomment only if form registration
+      // should respect "Anyone can register".
       // $registration_allowed = get_option('users_can_register', true);
       // if ($registration_allowed == '0' || $registration_allowed == false) {
       //   return new WP_Error('rest_forbidden', esc_html__('You do not have permission to access this endpoint.', 'wp-post-author'), array('status' => 403));
       // }
       $error_messages = array();
       $params = $request->get_params();
+      $form_check_id = (int) json_decode($params['formId']);
+      if (!$form_check_id || !is_array(json_decode($params['formInput'], true))) {
+        return new WP_Error('invalid_request', esc_html__('Invalid request.', 'wp-post-author'), array('status' => 400));
+      }
       $formInput = json_decode($params['formInput'], true);
-      $post_id = (int) json_decode($params['formId']);
+      $post_id = $form_check_id; // FIX: reuse the value already decoded
       global $wpdb;
 
       $table_name = $wpdb->prefix . "wpa_form_builder";
       $form = $wpdb->get_row($wpdb->prepare("SELECT * FROM " . $table_name . " WHERE id = %d", $post_id));
+      if (!$form) {
+        return new WP_Error('invalid_form', esc_html__('Form not found.', 'wp-post-author'), array('status' => 400));
+      }
       $form_settings =  json_decode($form->form_settings);
 
       $post_content = json_decode($form->post_content, true);
@@ -249,12 +267,28 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
       $keys = $this->get_post_content_keys($post_content);
       $basicFormInputData = array();
       foreach ($formInput as $key => $input) {
+        if (!isset($input['key'], $input['value'])) { // FIX: skip malformed entries
+          continue;
+        }
         if (in_array($input['key'], $basic_input)) {
           $basicFormInputData[$input['key']] = sanitize_text_field($input['value']);
         }
       }
+      // FIX: defaults so missing fields don't raise undefined index notices
+      $basicFormInputData += array(
+        'email'        => '',
+        'password'     => '',
+        'user_login'   => '',
+        'display_name' => '',
+      );
+
       $options = get_option('awpa_author_metabox_integration');
-      $membership = $params['membership'];
+      $membership = isset($params['membership']) ? $params['membership'] : ''; // FIX: avoid undefined index
+
+      // FIX: reject incomplete submissions early with a clear message
+      if (empty($basicFormInputData['email']) || empty($basicFormInputData['password'])) {
+        return new WP_Error('missing_fields', esc_html__('Email and password are required.', 'wp-post-author'), array('status' => 400));
+      }
 
       $user_id = wp_create_user(
         $basicFormInputData['user_login'] ?
@@ -264,7 +298,17 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
         sanitize_email($basicFormInputData['email'])
       );
 
-      if ($user_id) {
+      // FIX (main): stop if user creation failed, so nothing below can touch user 1
+      if (is_wp_error($user_id)) {
+        return new WP_Error(
+          $user_id->get_error_code(),
+          $user_id->get_error_message(),
+          array('status' => 400)
+        );
+      }
+      $user_id = (int) $user_id;
+
+      if ($user_id > 0) {
         $user = new WP_User($user_id);
         $user->remove_role('author');
         $user->remove_role('subscriber');
@@ -282,6 +326,7 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
         }
 
 
+        // ob_start();
         if ($membership == 'free_no_plan') {
           $this->awpa_create_free_user_membership($user_id);
         }
@@ -308,14 +353,15 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
         $advanceInputFormData = array();
         $advance_input = array('input_field', 'secondary_email', 'country', 'textarea', 'number', 'date', 'checkbox', 'select', 'radiobox', 'multiselect');
         foreach ($formInput as $key => $input) {
-          if (in_array($input['key'], $advance_input)) {
+          if (isset($input['key']) && in_array($input['key'], $advance_input)) { // FIX: isset guard
             array_push($advanceInputFormData, $input);
           }
         }
         if ($advanceInputFormData) {
           add_user_meta($user_id, 'advance_input', json_encode($advanceInputFormData));
         }
-        if (in_array('profile_image', $keys)) {
+        // FIX: only handle the upload if a file was actually sent
+        if (in_array('profile_image', $keys) && !empty($_FILES['profile_image'])) {
           $upload_overrides = array(
             'test_form' => false,
           );
@@ -324,7 +370,10 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
             $error_state = true;
             array_push($error_messages, ['key' => 'awpa-image-user', 'value' => $movefile['error']]);
           }
-          add_user_meta($user_id, 'profile_image', $movefile['url']);
+          // FIX: only save the URL if the upload succeeded
+          if (!empty($movefile['url'])) {
+            add_user_meta($user_id, 'profile_image', esc_url_raw($movefile['url']));
+          }
         }
 
         //send mail notification for registered user.
@@ -334,12 +383,20 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
           'email' => $basicFormInputData['email']
         ));
 
+
+        // $stray = ob_get_clean();
+        // if ($stray !== '') {
+        //   error_log('register-user: STRAY OUTPUT: ' . $stray);
+        // }
+
         return rest_ensure_response([
           'message' => __('User created successfully', 'wp-post-author'),
           'status' => 201,
           'user_id' => $user_id
         ]);
       }
+      // FIX: never fall through and return null
+      return new WP_Error('registration_failed', esc_html__('Could not create user.', 'wp-post-author'), array('status' => 500));
     }
 
     public function get_input_index($post_content, $id)
@@ -384,7 +441,15 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
     {
       global $wpdb;
       $table_name = $wpdb->prefix . "wpa_subscriptions";
-      $wpdb->insert($table_name, array(
+
+      // Skip quietly if the table doesn't exist.
+      if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name)) !== $table_name) {
+        error_log('awpa: table ' . $table_name . ' not found, free membership not created for user ' . (int) $user_id);
+        return false;
+      }
+
+      $now = current_time('mysql');
+      $result = $wpdb->insert($table_name, array(
         'user_id' => absint($user_id),
         'plan_name' => 'Free',
         'plan_id' => '0',
@@ -392,12 +457,14 @@ if (!class_exists('Awpa_Frontend_Form_Builder_Rest_Controller')) {
         'gateway' => 'Manual',
         'membership_type' => 'free',
         'quantity' => 1,
-        'starts_from' => date('Y-m-d H:i:s', strtotime('now')),
+        'starts_from' => $now,
         'trial_ends_at' => null,
         'ends_at' => date('Y-m-d H:i:s', strtotime('+1 years')),
-        'created_at' => date('Y-m-d H:i:s', strtotime('now')),
-        'updated_at' => date('Y-m-d H:i:s', strtotime('now')),
+        'created_at' => $now,
+        'updated_at' => $now,
       ), array('%d', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s'));
+
+      return $result !== false;
     }
   }
 }
